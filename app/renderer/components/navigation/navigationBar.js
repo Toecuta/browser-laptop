@@ -29,6 +29,7 @@ const settings = require('../../../../js/constants/settings')
 
 // State
 const tabState = require('../../../common/state/tabState')
+const menuBarState = require('../../../common/state/menuBarState')
 const publisherState = require('../../../common/lib/publisherUtil')
 const frameStateUtil = require('../../../../js/state/frameStateUtil')
 
@@ -94,10 +95,8 @@ class NavigationBar extends React.Component {
     const props = {}
     // used in renderer
     props.activeFrameKey = activeFrameKey
-    props.titleMode = titleMode
     props.isBookmarked = props.activeFrameKey !== undefined &&
       activeTab && activeTab.get('bookmarked')
-    props.isWideUrlBarEnabled = getSetting(settings.WIDE_URL_BAR)
     props.showBookmarkHanger = bookmarkDetail && bookmarkDetail.get('isBookmarkHanger')
     props.isLoading = loading
     props.showPublisherToggle = publisherState.shouldShowAddPublisherButton(state, location, publisherId)
@@ -109,6 +108,17 @@ class NavigationBar extends React.Component {
     props.activeTabId = activeTabId
     props.bookmarkKey = siteUtil.getSiteKey(activeFrame)
     props.showHomeButton = !props.titleMode && getSetting(settings.SHOW_HOME_BUTTON)
+
+    props.location = location
+    props.isDarwin = isDarwin()
+    props.isFullScreen = isFullScreen()
+    props.bookmarkDetail = bookmarkDetail
+    props.menubarVisible = menuBarState.isMenuBarVisible(currentWindow)
+    props.siteSettings = state.get('siteSettings')
+    props.synopsis = state.getIn(['publisherInfo', 'synopsis']) || new Immutable.Map()
+    props.locationInfo = state.get('locationInfo')
+    props.titleMode = titleMode
+    props.isWideURLbarEnabled = getSetting(settings.WIDE_URL_BAR)
 
     return props
   }
@@ -123,7 +133,7 @@ class NavigationBar extends React.Component {
       data-frame-key={this.props.activeFrameKey}
       className={cx({
         titleMode: this.props.titleMode,
-        [css(styles.navigationBar, (this.props.isDarwin && this.props.isFullScreen) && styles.navigationBar_isDarwin_isFullScreen, this.props.titleMode && styles.navigationBar_titleMode, this.props.isWideUrlBarEnabled && styles.navigationBar_wide)]: true
+        [css(styles.navigationBar, (this.props.isDarwin && this.props.isFullScreen) && styles.navigationBar_isDarwin_isFullScreen, this.props.titleMode && styles.navigationBar_titleMode, this.props.isWideURLbarEnabled && styles.navigationBar_wide)]: true
       })}>
       {
         this.props.showBookmarkHanger
