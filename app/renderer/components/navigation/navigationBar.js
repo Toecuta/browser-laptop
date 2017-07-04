@@ -10,7 +10,6 @@ const ipc = require('electron').ipcRenderer
 const ReduxComponent = require('../reduxComponent')
 const UrlBar = require('./urlBar')
 const AddEditBookmarkHanger = require('../bookmarks/addEditBookmarkHanger')
-const {NormalizedButton} = require('../common/browserButton')
 const NavigationBarButtonContainer = require('./buttons/navigationBarButtonContainer')
 
 // Components -> buttons
