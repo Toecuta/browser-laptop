@@ -1495,6 +1495,13 @@ const appActions = {
       actionType: appConstants.APP_SWIPE_RIGHT,
       percent
     })
+  },
+
+  addVersionInformation: function (versionInfo) {
+    dispatch({
+      actionType: appConstants.APP_ADD_VERSION_INFORMATION,
+      versionInfo
+    })
   }
 }
 

@@ -871,6 +871,11 @@ const handleAppAction = (action) => {
       appState.setIn(['sync', 'devices'], {})
       appState.setIn(['sync', 'objectsById'], {})
       break
+    case appConstants.APP_ADD_VERSION_INFORMATION:
+      const versionPath = ['about', 'brave', 'versionInformation']
+      appState = appState.setIn(versionPath,
+        (appState.getIn(versionPath) || new Immutable.List()).concat(action.versionInfo))
+      break
     case appConstants.APP_SHOW_DOWNLOAD_DELETE_CONFIRMATION:
       appState = appState.set('deleteConfirmationVisible', true)
       break
